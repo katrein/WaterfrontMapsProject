@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Google Maps Mini Project</title>
+        <script src="https://kit.fontawesome.com/c939d0e917.js"></script>
+        <link rel="stylesheet" href="style/style.css">
+        <!-- API KEY = AIzaSyAcDW0Yp01lROXa9YKX3IxYEvBjKPx5M2Y -->
+    </head>
+    <body>
+      <div class="title">V&A Waterfront Google Maps Project</div>
+      <div id="map"></div>
+      <script>
+        function initMap(){
+          // Map options
+          var options = {
+            // The Waterfront www.waterfront.co.za
+            center:{lat:-33.90788,lng:18.4186911},
+            zoom:17
+          }
+          // New map
+          var map = new
+          google.maps.Map(document.getElementById('map'), options);
+          // Listen for click on map
+          google.maps.event.addListener(map, 'click', function(event){
+            // Add marker
+            addMarker({coords:event.latLng});
+          });
+          // Array of markers
+          var markers = [
+            {
+              // Two Oceans Aquarium
+              // www.aquarium.co.za
+              coords:{lat:-33.9376696,lng:18.5214811},
+              content:'<h1>Two Oceans Aquarium</h1>'
+            },
+            {
+              // Cape Town Diamond Museum
+              // www.capetowndiamondmuseum.org
+              coords:{lat:-33.9376696,lng:18.5214811},
+              content:'<h1>Diamond Museum</h1>'
+            },
+            {
+              // City Sightseeing Cape Town
+              // www.citysightseeing.co.za
+              coords:{lat:-33.9080116,lng:18.416981},
+              content:'<h1>City Sightseeing Bus Terminal</h1>'
+            },
+            {
+              // Zeitz Museum of Contemporary Art Africa
+              // www.zeitzmocaa.museum
+              coords:{lat:-33.9376696,lng:18.5214811},
+              content:'<h1>Zeitz Museum</h1>'
+            }
+          ];
+          // Loop through markers
+          for(var i = 0;i < markers.length;i++){
+            // Add marker
+            addMarker(markers[i]);
+          }
+          // Add Marker Function
+          function addMarker(props){
+            var marker = new google.maps.Marker({
+              position:props.coords,
+              map:map,
+              // icon:props.iconImage
+            });
+            // Check for custom icon
+            if(props.iconImage){
+              // Set icon image
+              marker.setIcon(props.iconImage);
+            }
+            // Check content
+            if(props.content){
+              var infoWindow = new google.maps.InfoWindow({
+                content:props.content
+              });
+              marker.addListener('click', function(){
+                infoWindow.open(map, marker);
+              });
+            }
+          }
+        }
+      </script>
+      <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcDW0Yp01lROXa9YKX3IxYEvBjKPx5M2Y&libraries=places&callback=initMap">
+      </script>
+    </body>
+</html>
